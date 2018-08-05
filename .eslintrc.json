@@ -1,0 +1,29 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "typescript"
+  ],
+  "parser": "typescript-eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "import/resolver": {
+      "node": true,
+      "eslint-import-resolver-typescript": true
+    }
+  },
+  "rules": {
+    "react/jsx-filename-extension": false,
+    "no-unused-vars": "off",
+    "no-undef": "off",
+    "react/prop-types": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "react/prefer-stateless-function": "warn"
+  }
+}

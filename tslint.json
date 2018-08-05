@@ -1,15 +1,4 @@
 {
-  "extends": [
-    "tslint:recommended",
-    "tslint-react",
-    "tslint-config-prettier",
-    "tslint-config-airbnb"
-  ],
-  "linterOptions": {
-    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
-  },
-  "rules": {
-    "ter-arrow-parens": "off",
-    "arrow-parens": true
-  }
+  "noUnusedLocals": true,
+  "noUnusedParameters": true
 }

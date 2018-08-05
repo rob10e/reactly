@@ -1,0 +1,3 @@
+export const ADD_WORKSPACE = 'ADD_WORKSPACE';
+export const REMOVE_WORKSPACE = 'REMOVE_WORKSPACE';
+export const SET_ACTIVE = 'SET_ACTIVE';

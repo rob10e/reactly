@@ -1,8 +1,9 @@
 import 'bootstrap-material-design/dist/css/bootstrap-material-design.min.css';
 import * as React from 'react';
+import { Provider } from 'react-redux';
 import './App.css';
-import { Content, Header } from './components/Shared';
-import { Footer } from './components/Shared/Footer';
+import Layout from './components/Layout/Layout';
+import store from './store';
 
 class App extends React.Component {
   public componentDidMount() {
@@ -14,11 +15,9 @@ class App extends React.Component {
   }
   public render() {
     return (
-      <div>
-        <Header />
-        <Content>Content</Content>
-        <Footer />
-      </div>
+      <Provider store={store}>
+        <Layout />
+      </Provider>
     );
   }
 }
