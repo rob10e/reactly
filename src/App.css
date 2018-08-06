@@ -1,3 +1,8 @@
+.content, .flex {
+  display: flex;
+  flex-direction: column;
+  flex: 1; }
+
 html,
 body,
 #root {
@@ -22,3 +27,49 @@ footer {
   border: 0;
   border-radius: 0;
   box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14), 0 -3px 1px -2px rgba(0, 0, 0, 0.2), 0 -1px 5px 0 rgba(0, 0, 0, 0.12); }
+
+.tabbar-row {
+  flex-shrink: 0;
+  display: flex;
+  flex: 0 auto;
+  flex-direction: row;
+  background-color: #29465f1c; }
+
+.nav-tabs .nav-item .nav-link {
+  padding: 0.5rem 1rem; }
+
+.nav-tabs .nav-item .active.nav-link {
+  border-color: #aeb9c4 #aeb9c4 #a4afba; }
+
+@font-face {
+  font-family: "IcoMoon-Free";
+  src: url("./content/fonts/IcoMoon-Free.ttf?-b7qzp2") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+.icon {
+  font-family: "IcoMoon-Free";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.54);
+  /* Enable Ligatures ================ */
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  -o-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+  .icon:hover {
+    color: rgba(0, 0, 0, 0.87); }
+  .icon:active {
+    color: rgba(255, 0, 0, 0.87); }
+  .icon-sm {
+    font-size: 16px;
+    margin: auto;
+    padding-left: 4px; }

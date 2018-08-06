@@ -1,3 +1,11 @@
+$active-darken-amount: 20;
+
+%flex {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 html,
 body,
 #root {
@@ -9,7 +17,9 @@ body,
   display: flex;
   flex-direction: column;
 }
+
 .content {
+  @extend %flex;
   flex: 1 0 auto;
 }
 footer,
@@ -25,4 +35,72 @@ footer {
   border-radius: 0;
   box-shadow: 0 -2px 2px 0 rgba(0, 0, 0, 0.14),
     0 -3px 1px -2px rgba(0, 0, 0, 0.2), 0 -1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.flex {
+  @extend %flex;
+}
+
+.tabbar-row {
+  flex-shrink: 0;
+  display: flex;
+  flex: 0 auto;
+  flex-direction: row;
+  background-color: #29465f1c;
+}
+
+.nav-tabs .nav-item {
+  .nav-link {
+    padding: 0.5rem 1rem;
+  }
+  .active.nav-link {
+    border-color: darken(#e9ecef, $active-darken-amount)
+      darken(#e9ecef, $active-darken-amount)
+      darken(#dee2e6, $active-darken-amount);
+  }
+}
+
+@font-face {
+  font-family: "IcoMoon-Free";
+  src: url("./content/fonts/IcoMoon-Free.ttf?-b7qzp2") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+$icon-color: rgba(0, 0, 0, 0.87);
+
+.icon {
+  font-family: "IcoMoon-Free";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.54);
+
+  /* Enable Ligatures ================ */
+  -webkit-font-feature-settings: "liga";
+  -moz-font-feature-settings: "liga=1";
+  -moz-font-feature-settings: "liga";
+  -ms-font-feature-settings: "liga" 1;
+  -o-font-feature-settings: "liga";
+  font-feature-settings: "liga";
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.87);
+  }
+
+  &:active {
+    color: rgba(255, 0, 0, 0.87);
+  }
+
+  &-sm {
+    font-size: 16px;
+    margin: auto;
+    padding-left: 4px;
+  }
 }
