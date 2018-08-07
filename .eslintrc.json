@@ -24,6 +24,7 @@
     "no-undef": "off",
     "react/prop-types": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "react/prefer-stateless-function": "warn"
+    "react/prefer-stateless-function": "warn",
+    "semi": "off"
   }
 }
