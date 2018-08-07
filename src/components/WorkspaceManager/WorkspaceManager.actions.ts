@@ -1,8 +1,10 @@
+import IWorkspace from './Workspace/Workspace.state';
 import {
   ADD_WORKSPACE,
   REMOVE_WORKSPACE,
   SET_ACTIVE,
   UPDATE_WORKSPACE_TITLE,
+  UPDATE_WORKSPACE,
 } from './WorkspaceManager.constants';
 
 export interface IAddWorkspaceAction {
@@ -21,6 +23,10 @@ export interface IUpdateWorkspaceTitleAction {
   type: typeof UPDATE_WORKSPACE_TITLE;
   payload: { title: string; id: number };
 }
+export interface IUpdateWorkspaceAction {
+  type: typeof UPDATE_WORKSPACE;
+  payload: { workspace: IWorkspace; id: number };
+}
 
 export const addWorkspace = (): IAddWorkspaceAction => ({
   type: ADD_WORKSPACE,
@@ -36,4 +42,8 @@ export const setActive = (id: number): ISetActiveAction => ({
 export const updateWorkspaceTitle = (title: string, id: number): IUpdateWorkspaceTitleAction => ({
   payload: { title, id },
   type: UPDATE_WORKSPACE_TITLE,
+});
+export const updateWorkspace = (id: number, workspace: IWorkspace): IUpdateWorkspaceAction => ({
+  payload: { workspace, id },
+  type: UPDATE_WORKSPACE,
 });

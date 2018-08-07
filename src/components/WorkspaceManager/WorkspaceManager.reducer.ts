@@ -1,28 +1,31 @@
-import { IWorkspaceManagerState } from './IWorkspaceManager.state';
+import IWorkspaceManagerState from './IWorkspaceManager.state';
 
-import { IWorkspaceState } from './Workspace/Workspace.state';
+import IWorkspace from './Workspace/Workspace.state';
 import {
   IAddWorkspaceAction,
   IRemoveWorkspaceAction,
   ISetActiveAction,
   IUpdateWorkspaceTitleAction,
+  IUpdateWorkspaceAction,
 } from './WorkspaceManager.actions';
 import {
   ADD_WORKSPACE,
   REMOVE_WORKSPACE,
   SET_ACTIVE,
   UPDATE_WORKSPACE_TITLE,
+  UPDATE_WORKSPACE,
 } from './WorkspaceManager.constants';
 
 export const initialState: IWorkspaceManagerState = {
   activeWorkspace: 1,
-  workspaces: [{ id: 1, title: 'Workspace 1', content: 'Content 1' }],
+  workspaces: [{ id: 1, title: 'Workspace 1', content: null }],
 };
 
 type actions = | IAddWorkspaceAction
   | IRemoveWorkspaceAction
   | ISetActiveAction
-  | IUpdateWorkspaceTitleAction;
+  | IUpdateWorkspaceTitleAction
+  | IUpdateWorkspaceAction;
 
 export default (state: IWorkspaceManagerState = initialState, action: actions) => {
   let workspaces;
@@ -34,7 +37,7 @@ export default (state: IWorkspaceManagerState = initialState, action: actions) =
         id: newWorkspaceId,
         title: `Workspace ${newWorkspaceId}`,
         content: `Content ${newWorkspaceId}`,
-      } as IWorkspaceState);
+      } as IWorkspace);
       return { ...state, workspaces };
     case REMOVE_WORKSPACE:
       return {
@@ -51,6 +54,15 @@ export default (state: IWorkspaceManagerState = initialState, action: actions) =
         ...state,
         workspaces: state.workspaces.map(
           item => (item.id === action.payload.id ? { ...item, title: action.payload.title } : item),
+        ),
+      };
+    case UPDATE_WORKSPACE:
+      return {
+        ...state,
+        workspaces: state.workspaces.map(
+          item => (item.id === action.payload.id
+            ? { ...item, content: action.payload.workspace.content }
+            : item),
         ),
       };
     default:

@@ -1,6 +1,6 @@
-import { IWorkspaceState } from './Workspace/Workspace.state';
+import IWorkspace from './Workspace/Workspace.state';
 
-export interface IWorkspaceManagerState {
+export default interface IWorkspaceManagerState {
   activeWorkspace: number;
-  workspaces: ReadonlyArray<IWorkspaceState>;
+  workspaces: ReadonlyArray<IWorkspace>;
 }

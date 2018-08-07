@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Tab, { ITabProps } from './Tab';
+import IWorkspace from '../../WorkspaceManager/Workspace/Workspace.state';
 
 export interface ITabsProps {
   children: React.ReactElement<ITabProps>[] | React.ReactElement<ITabProps>;
@@ -8,6 +9,7 @@ export interface ITabsProps {
   addWorkspace: () => void;
   removeWorkspace: (id: number) => void;
   updateTabTitle: (title: string, id: number) => void;
+  workspaces: ReadonlyArray<IWorkspace>;
 }
 
 const Tabs: React.SFC<ITabsProps> = ({
@@ -17,6 +19,7 @@ const Tabs: React.SFC<ITabsProps> = ({
   addWorkspace,
   removeWorkspace,
   updateTabTitle,
+  workspaces,
 }) => {
   const child = Array.isArray(children)
     ? (children as React.ReactElement<ITabProps>[])

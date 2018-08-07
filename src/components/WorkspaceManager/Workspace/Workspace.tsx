@@ -1,13 +1,9 @@
 import * as React from 'react';
+import IWorkspace from './Workspace.state';
 
-export interface IWorkspaceProps {
-  index: number;
-  title: string;
-}
-
-const Workspace: React.SFC<IWorkspaceProps> = ({ title }) => (
+const Workspace: React.SFC<IWorkspace> = ({ content }) => (
   <div>
-    {title}
+    {content}
   </div>
 );
 

@@ -5,8 +5,10 @@ interface IContent {
 }
 
 // tslint:disable-next-line:variable-name
-const Content: React.SFC<IContent> = (props) => {
-  return <div className="content">{props.children}</div>;
-};
+const Content: React.SFC<IContent> = ({ children }) => (
+  <div className="content">
+    {children}
+  </div>
+);
 
 export default Content;
