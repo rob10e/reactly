@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Tab, { ITabProps } from './Tab';
 import IWorkspace from '../../WorkspaceManager/Workspace/Workspace.state';
+import Workspace from '../../WorkspaceManager/Workspace/Workspace';
 
 export interface ITabsProps {
   children: React.ReactElement<ITabProps>[] | React.ReactElement<ITabProps>;
@@ -29,6 +30,7 @@ const Tabs: React.SFC<ITabsProps> = ({
   const componentChildren = Array.isArray(children)
     ? (children as React.ReactElement<ITabProps>[])
     : [children];
+  const blankWorkspace: IWorkspace = { id: 0, content: '', title: '' };
   return (
     <div className="flex">
       <ul className="nav nav-tabs tabbar-row">
@@ -51,7 +53,7 @@ const Tabs: React.SFC<ITabsProps> = ({
         })}
       </ul>
       <div className="card content">
-        {child && child.props.content}
+        <Workspace {...child.props.workspace || blankWorkspace} />
       </div>
     </div>
   );

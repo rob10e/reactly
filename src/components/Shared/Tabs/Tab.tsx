@@ -1,11 +1,12 @@
 import * as React from 'react';
 import TabTitle from './TabTitle';
+import IWorkspace from '../../WorkspaceManager/Workspace/Workspace.state';
 
 export interface ITabProps {
   title: string;
   disabled?: boolean;
   active?: boolean;
-  content?: React.ReactElement<any>;
+  workspace?: IWorkspace;
   onClick?: () => void;
   removeWorkspace?: () => void;
   updateTabTitle?: (title: string) => void;
@@ -18,7 +19,7 @@ const Tab: React.SFC<ITabProps> = ({
   active,
   disabled,
   onClick,
-  content,
+  workspace,
   removeWorkspace,
   updateTabTitle,
 }) => (
@@ -30,9 +31,9 @@ const Tab: React.SFC<ITabProps> = ({
     >
       <TabTitle
         title={title}
-        updateTabTitle={newTitle => updateTabTitle && content && updateTabTitle(newTitle)}
+        updateTabTitle={newTitle => updateTabTitle && workspace && updateTabTitle(newTitle)}
       />
-      {content && (
+      {workspace && (
         <button
           onClick={(e) => {
             if (removeWorkspace) {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import * as isEqual from 'react-fast-compare';
 import { Tabs, Tab } from '../Shared/Tabs';
 import IWorkspaceManagerState from './IWorkspaceManager.state';
 import {
@@ -47,7 +48,7 @@ const WorkspaceManager: React.SFC<WorkspaceManagerProps> = ({
 }) => {
   const currentWorkspace = workspaces.filter(item => item.id === activeWorkspace)[0];
   const newWorkspace = updateCurrentWorkspace(currentWorkspace);
-  if (newWorkspace.content !== currentWorkspace.content) {
+  if (!isEqual(currentWorkspace, newWorkspace)) {
     updateWorkspace(activeWorkspace, newWorkspace);
   }
   return (
@@ -62,8 +63,8 @@ const WorkspaceManager: React.SFC<WorkspaceManagerProps> = ({
         updateTabTitle={(title, id) => updateWorkspaceTitle(title, id)}
         workspaces={workspaces}
       >
-        {workspaces.map(({ id, title, content }) => (
-          <Tab key={id} title={title} content={content} />
+        {workspaces.map(workspace => (
+          <Tab key={workspace.id} title={workspace.title} workspace={workspace} />
         ))}
       </Tabs>
     </React.Fragment>
