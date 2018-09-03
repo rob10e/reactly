@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Content, Footer, Header } from '../Shared';
 import WorkspaceManager from '../WorkspaceManager';
+// tslint:disable-next-line:import-name
 import IWorkspace from '../WorkspaceManager/Workspace/Workspace.state';
-import GenericBlock from '../Blocks/GenericBlock';
+import Block from '../Blocks/Block';
 
 class Layout extends React.Component {
   private updateActiveWorkspace = (workspace: IWorkspace): IWorkspace => ({
     ...workspace,
-    content: <GenericBlock />,
-  });
+    content: <Block />,
+  })
 
   render() {
     return (
