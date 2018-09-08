@@ -76,8 +76,7 @@ const mapState2Props = (state: IRootState) => ({ manager: { ...state.WorkspaceMa
 export default connect<
 IWorkspaceManagerStateProps,
 IWorkspaceManagerDispatchProps,
-IWorkspaceManagerPassedProps
->(
+IWorkspaceManagerPassedProps>(
   mapState2Props,
   {
     addWorkspace,

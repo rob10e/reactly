@@ -1,5 +1,6 @@
 import * as React from 'react';
 import TabTitle from './TabTitle';
+// tslint:disable-next-line:import-name
 import IWorkspace from '../../WorkspaceManager/Workspace/Workspace.state';
 
 export interface ITabProps {

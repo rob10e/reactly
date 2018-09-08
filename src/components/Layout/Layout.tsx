@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Content, Footer, Header } from '../Shared';
 import WorkspaceManager from '../WorkspaceManager';
-// tslint:disable-next-line:import-name
 import IWorkspace from '../WorkspaceManager/Workspace/Workspace.state';
 import Block from '../Blocks/Block';
 

@@ -1,6 +1,4 @@
 import * as React from 'react';
-// import Konva from 'konva';
-// import { Stage, Layer } from 'react-konva';
 import IWorkspace from './Workspace.state';
 
 const styles = {
@@ -15,11 +13,6 @@ const Workspace: React.SFC<IWorkspace> = ({ content }) => (
       {content}
     </g>
   </svg>
-  // <Stage width={window.innerWidth} height={window.innerHeight} style={styles.background}>
-  //   <Layer>
-  //     {content}
-  //   </Layer>
-  // </Stage>
 );
 
 export default Workspace;

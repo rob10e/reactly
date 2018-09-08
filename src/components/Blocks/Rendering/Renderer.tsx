@@ -1,65 +1,77 @@
 import * as React from 'react';
 // tslint:disable-next-line:import-name
 import Builder from '@rob10e/svg-path-js';
-import { withDefaultProps } from '../../HOC/withDefaultProps';
-
-export interface IBlockRenderProps {
-}
-
-type DefaultProps = {
-  length: number;
-  topCorners: Corner;
-  bottomCorners: Corner;
-  topConnector: boolean;
-  bottomConnector: boolean;
-  socket: Socket;
-};
-
-const defaultProps: Readonly<DefaultProps> = {
-  length: 130,
-  topCorners: 'round',
-  bottomCorners: 'round',
-  topConnector: true,
-  bottomConnector: true,
-  socket: 'external',
-};
 
 type Corner = 'round' | 'flat';
 type Socket = 'none' | 'external' | 'internal';
 
-class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
-  private externalCornerSize: number = 5;
+class BlockRenderer {
+  constructor() {
+    this.initialize();
+  }
 
-  private toConnector: number = 15;
+  private initialize(): void {
+    this.length = 130;
+    this.topCorners = 'round';
+    this.bottomCorners = 'round';
+    this.socket = 'external';
+    this.topConnector = true;
+    this.bottomConnector = true;
 
-  private connectorWidth: number = 6;
+    this.mainPath = '';
+    this.hilightPath = '';
+    this.shadowPath = '';
+    this.mainBuilder = new Builder();
+    this.hilightBuilder = new Builder();
+    this.shadowBuilder = new Builder();
+  }
 
-  private connectorDepth: number = 4;
+  // Constants
+  private readonly externalCornerSize: number = 5;
 
-  private connectorValley: number = 3;
+  private readonly toConnector: number = 15;
 
-  private lengthReturn: number =
+  private readonly connectorWidth: number = 6;
+
+  private readonly connectorDepth: number = 4;
+
+  private readonly connectorValley: number = 3;
+
+  private readonly lengthReturn: number =
     this.toConnector + this.connectorWidth * 2 + this.connectorValley - 0.5;
 
-  private cornerSize: number = 8;
+  private readonly cornerSize: number = 8;
 
-  private mainPath: string = '';
+  // Class variables
+  private mainPath: string;
 
-  private lightPath: string = '';
+  private hilightPath: string;
 
-  private darkPath: string = '';
+  private shadowPath: string;
 
-  private mainBuilder: Builder = new Builder();
+  private mainBuilder: Builder;
 
-  private lightBuilder: Builder = new Builder();
+  private hilightBuilder: Builder;
 
-  private darkBuilder: Builder = new Builder();
+  private shadowBuilder: Builder;
+
+  private length: number;
+
+  private topCorners: Corner;
+
+  private bottomCorners: Corner;
+
+  private socket: Socket;
+
+  private topConnector: boolean;
+
+  private bottomConnector: boolean;
 
   public render() {
     this.buildSvg();
     return (
       <React.Fragment>
-        <path transform="translate(1,1)" fill="#844966" d={this.darkPath} />
+        <path transform="translate(1,1)" fill="#844966" d={this.shadowPath} />
         <path d={this.mainPath} fill="rgb(165, 91, 128)" />
         <path
           style={{
@@ -68,18 +80,17 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
             strokeWidth: 1,
           }}
           stroke="#c08ca6"
-          d={this.lightPath}
+          d={this.hilightPath}
         />
       </React.Fragment>
     );
   }
 
-  private buildSvg() {
-    const { length } = this.props;
+  public buildSvg() {
     // Start
     this.mainBuilder.moveToRel(0, this.cornerSize);
-    this.darkBuilder.moveToRel(0, this.cornerSize);
-    this.lightBuilder.moveToRel(0.5, this.cornerSize - 0.5);
+    this.shadowBuilder.moveToRel(0, this.cornerSize);
+    this.hilightBuilder.moveToRel(0.5, this.cornerSize - 0.5);
 
     // top-left-corner
     this.buildTopLeftCorner();
@@ -88,9 +99,9 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
     this.buildTopConnector();
 
     // length
-    this.mainBuilder.horizontalTo(length);
-    this.darkBuilder.horizontalTo(length);
-    this.lightBuilder.horizontalTo(length - 0.5);
+    this.mainBuilder.horizontalTo(this.length);
+    this.shadowBuilder.horizontalTo(this.length);
+    this.hilightBuilder.horizontalTo(this.length - 0.5);
 
     let lengthMod: number = 0;
 
@@ -105,7 +116,7 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
 
     // length-return
     this.mainBuilder.horizontalTo(this.lengthReturn);
-    this.darkBuilder.horizontalTo(this.lengthReturn);
+    this.shadowBuilder.horizontalTo(this.lengthReturn);
 
     // bottom-connector
     this.buildBottomConnector();
@@ -115,13 +126,12 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
 
     // end
     this.mainPath = this.mainBuilder.close();
-    this.darkPath = this.darkBuilder.close();
-    this.lightPath = this.lightBuilder.end();
+    this.shadowPath = this.shadowBuilder.close();
+    this.hilightPath = this.hilightBuilder.end();
   }
 
   private buildBottomLeftCorner() {
-    const { bottomCorners } = this.props;
-    if (bottomCorners === 'round') {
+    if (this.bottomCorners === 'round') {
       this.mainBuilder.arcToRel(
         this.cornerSize,
         this.cornerSize,
@@ -131,7 +141,7 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
         -this.cornerSize,
         -this.cornerSize,
       );
-      this.darkBuilder.arcToRel(
+      this.shadowBuilder.arcToRel(
         this.cornerSize,
         this.cornerSize,
         0,
@@ -140,41 +150,37 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
         -this.cornerSize,
         -this.cornerSize,
       );
-      this.lightBuilder
+      this.hilightBuilder
         .moveTo(2.6966991411008934, 22.303300858899107)
         .arcTo(this.cornerSize - 0.5, this.cornerSize - 0.5, 0, false, true, 0.5, 17)
         .verticalTo(this.cornerSize);
     } else {
       this.mainBuilder.horizontalTo(0);
-      this.darkBuilder.horizontalTo(0);
-      this.lightBuilder.moveTo(0, 22.303300858899107).verticalTo(0);
+      this.shadowBuilder.horizontalTo(0);
+      this.hilightBuilder.moveTo(0, 22.303300858899107).verticalTo(0);
     }
   }
 
   private buildBottomConnector() {
-    const { bottomConnector } = this.props;
-
-    if (bottomConnector) {
+    if (this.bottomConnector) {
       this.mainBuilder
         .lineToRel(-this.connectorWidth, this.connectorDepth)
         .lineToRel(-this.connectorValley, 0)
         .lineToRel(-this.connectorWidth, -this.connectorDepth)
         .horizontalTo(this.cornerSize);
-      this.darkBuilder
+      this.shadowBuilder
         .lineToRel(-this.connectorWidth, this.connectorDepth)
         .lineToRel(-this.connectorValley, 0)
         .lineToRel(-this.connectorWidth, -this.connectorDepth)
         .horizontalTo(this.cornerSize);
     } else {
       this.mainBuilder.horizontalTo(this.toConnector - this.cornerSize);
-      this.darkBuilder.horizontalTo(this.toConnector - this.cornerSize);
+      this.shadowBuilder.horizontalTo(this.toConnector - this.cornerSize);
     }
   }
 
   private buildBottomRightCorner() {
-    const { bottomCorners, socket } = this.props;
-
-    if (bottomCorners === 'round' && socket !== 'external') {
+    if (this.bottomCorners === 'round' && this.socket !== 'external') {
       this.mainBuilder.arcToRel(
         this.cornerSize,
         this.cornerSize,
@@ -184,7 +190,7 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
         -this.cornerSize,
         this.cornerSize,
       );
-      this.darkBuilder.arcToRel(
+      this.shadowBuilder.arcToRel(
         this.cornerSize,
         this.cornerSize,
         0,
@@ -195,77 +201,71 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
       );
     } else {
       this.mainBuilder.verticalToRel(this.externalCornerSize);
-      this.darkBuilder.verticalToRel(this.externalCornerSize);
+      this.shadowBuilder.verticalToRel(this.externalCornerSize);
     }
   }
 
   private buildSocket(lengthMod: number) {
-    const { socket } = this.props;
-
-    if (socket === 'external') {
+    if (this.socket === 'external') {
       this.mainBuilder.cubicToRel(0, 10, -8, -8, -8, 7.5).smoothToRel(8, -2.5, 8, 7.5);
-      this.darkBuilder.cubicToRel(0, 10, -8, -8, -8, 7.5).smoothToRel(8, -2.5, 8, 7.5);
-      this.lightBuilder
-        .moveTo(length + lengthMod - 0.5, 0.5)
-        .moveTo(length + lengthMod - 5.5, 19.3)
+      this.shadowBuilder.cubicToRel(0, 10, -8, -8, -8, 7.5).smoothToRel(8, -2.5, 8, 7.5);
+      this.hilightBuilder
+        .moveTo(this.length + lengthMod - 0.5, 0.5)
+        .moveTo(this.length + lengthMod - 5.5, 19.3)
         .lineToRel(3.68, -2.1);
-    } else if (socket === 'internal') {
+    } else if (this.socket === 'internal') {
       // TODO: build this
     } else {
       this.mainBuilder.verticalToRel(10);
-      this.darkBuilder.verticalToRel(10);
+      this.shadowBuilder.verticalToRel(10);
     }
   }
 
   private buildTopRightCorner(): number {
-    const { topCorners, socket } = this.props;
-
     let lengthMod: number = 0;
-    if (topCorners === 'round' && socket !== 'external') {
-      this.mainBuilder.arcTo(
+    if (this.topCorners === 'round' && this.socket !== 'external') {
+      this.mainBuilder.arcToRel(
         this.cornerSize,
         this.cornerSize,
         0,
         false,
         true,
-        length + this.cornerSize,
+        this.cornerSize,
         this.cornerSize,
       );
-      this.darkBuilder.arcTo(
+      this.shadowBuilder.arcToRel(
         this.cornerSize,
         this.cornerSize,
         0,
         false,
         true,
-        length + this.cornerSize,
+        this.cornerSize,
         this.cornerSize,
       );
     } else {
       lengthMod = this.cornerSize - this.externalCornerSize;
       this.mainBuilder.horizontalToRel(lengthMod);
-      this.darkBuilder.horizontalToRel(lengthMod);
-      this.lightBuilder.horizontalToRel(lengthMod - 0.5);
+      this.shadowBuilder.horizontalToRel(lengthMod);
+      this.hilightBuilder.horizontalToRel(lengthMod - 0.5);
       this.mainBuilder.verticalToRel(this.externalCornerSize);
-      this.darkBuilder.verticalToRel(this.externalCornerSize);
+      this.shadowBuilder.verticalToRel(this.externalCornerSize);
     }
     return lengthMod;
   }
 
   private buildTopConnector() {
-    const { topConnector } = this.props;
-
-    if (topConnector) {
+    if (this.topConnector) {
       this.mainBuilder
         .horizontalTo(this.toConnector)
         .lineToRel(this.connectorWidth, this.connectorDepth)
         .lineToRel(this.connectorValley, 0)
         .lineToRel(this.connectorWidth, -this.connectorDepth);
-      this.darkBuilder
+      this.shadowBuilder
         .horizontalTo(this.toConnector)
         .lineToRel(this.connectorWidth, this.connectorDepth)
         .lineToRel(this.connectorValley, 0)
         .lineToRel(this.connectorWidth, -this.connectorDepth);
-      this.lightBuilder
+      this.hilightBuilder
         .horizontalTo(15)
         .lineToRel(this.connectorWidth, this.connectorDepth)
         .lineToRel(this.connectorValley, 0)
@@ -274,12 +274,18 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
   }
 
   private buildTopLeftCorner() {
-    const { topCorners } = this.props;
-
-    if (topCorners === 'round') {
+    if (this.topCorners === 'round') {
       this.mainBuilder.arcTo(this.cornerSize, this.cornerSize, 0, false, true, this.cornerSize, 0);
-      this.darkBuilder.arcTo(this.cornerSize, this.cornerSize, 0, false, true, this.cornerSize, 0);
-      this.lightBuilder.arcTo(
+      this.shadowBuilder.arcTo(
+        this.cornerSize,
+        this.cornerSize,
+        0,
+        false,
+        true,
+        this.cornerSize,
+        0,
+      );
+      this.hilightBuilder.arcTo(
         this.cornerSize - 0.5,
         this.cornerSize - 0.5,
         0,
@@ -290,10 +296,10 @@ class BlockRenderer extends React.Component<IBlockRenderProps & DefaultProps> {
       );
     } else {
       this.mainBuilder.verticalTo(0);
-      this.darkBuilder.verticalTo(0);
-      this.darkBuilder.verticalTo(0);
+      this.shadowBuilder.verticalTo(0);
+      this.hilightBuilder.verticalTo(0);
     }
   }
 }
 
-export default withDefaultProps(defaultProps, BlockRenderer);
+export default BlockRenderer;

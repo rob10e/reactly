@@ -21,7 +21,7 @@ export default class TabTitle extends React.Component<ITabTitleProps, ITabTitleS
     e.stopPropagation();
     this.setState({ editMode: false });
     this.props.updateTabTitle(this.state.title);
-  };
+  }
 
   renderEditMode = () => {
     const { title } = this.state;
@@ -41,7 +41,7 @@ export default class TabTitle extends React.Component<ITabTitleProps, ITabTitleS
         onChange={e => this.setState({ title: e.target.value })}
       />
     );
-  };
+  }
 
   render() {
     return this.state.editMode ? (

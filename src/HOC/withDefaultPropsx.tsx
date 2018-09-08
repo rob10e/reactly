@@ -4,7 +4,7 @@ export const withDefaultProps = <P extends object, DP extends Partial<P> = Parti
   defaultProps: DP,
   component: ComponentType<P>,
 ) => {
-  // Extract props that need to be riquired
+  // Extract props that need to be required
   type PropsExcludingDefaults = Pick<P, Exclude<keyof P, keyof DP>>;
 
   type RecomposedProps = Partial<DP> & Required<PropsExcludingDefaults>;
