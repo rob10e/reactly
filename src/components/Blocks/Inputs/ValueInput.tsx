@@ -1,16 +1,25 @@
 import * as React from 'react';
-import Input from '../Rendering/Input';
-import TextField from '../Fields/TextField';
+import Input, { Types, Align } from '../Rendering/Input';
 
-export interface IInputValueProps {}
+export interface IValueInputProps {
+  children: React.ReactChildren | React.ReactChild;
+  name: string;
+  type?: Types;
+  alignment?: Align.Right;
+}
 
-export interface IInputValueState {}
+export interface IValueInputState {}
 
-export default class InputValue extends React.Component<IInputValueProps, IInputValueState> {
+export default class ValueInput extends React.Component<IValueInputProps, IValueInputState> {
+  public static defaultProps = {
+    type: Types.Any,
+    alignment: Align.Left,
+  };
+
   public render() {
     return (
     <Input>
-      <TextField value="Test"/>
+      {this.props.children}
     </Input>
     );
   }

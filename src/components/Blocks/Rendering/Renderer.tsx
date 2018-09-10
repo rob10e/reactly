@@ -301,5 +301,6 @@ class BlockRenderer {
     }
   }
 }
+export const RenderContext = React.createContext(new BlockRenderer());
 
 export default BlockRenderer;

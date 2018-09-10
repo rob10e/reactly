@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { withRenderer } from '../../../HOC/withRenderer';
 
 export interface ITextFieldProps {
   value: string;
@@ -7,8 +8,10 @@ export interface ITextFieldProps {
 export interface ITextFieldState {
 }
 
-export default class TextField extends React.Component<ITextFieldProps, ITextFieldState> {
+class TextField extends React.Component<ITextFieldProps, ITextFieldState> {
   public render() {
     return null;
   }
 }
+
+export default withRenderer(TextField);
